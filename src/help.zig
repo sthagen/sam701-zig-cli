@@ -14,10 +14,9 @@ pub fn print_command_help(
     app: *const command.App,
     command_path: []const *const command.Command,
     global_options: *const GlobalOptions,
+    alloc: Allocator,
 ) !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-    var arena = std.heap.ArenaAllocator.init(allocator);
+    var arena = std.heap.ArenaAllocator.init(alloc);
     defer arena.deinit();
 
     defer printer.flush();

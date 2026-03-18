@@ -263,7 +263,13 @@ pub fn Parser(comptime Iterator: type) type {
                 var buf: [4096]u8 = undefined;
                 var writer = std.Io.File.stdout().writer(self.io, &buf);
                 var printer = Printer.init(&writer);
-                try help.print_command_help(&printer, self.app, try self.command_path.toOwnedSlice(self.orig_allocator), self.global_options);
+                try help.print_command_help(
+                    &printer,
+                    self.app,
+                    try self.command_path.toOwnedSlice(self.orig_allocator),
+                    self.global_options,
+                    self.arena.child_allocator,
+                );
                 std.process.exit(0);
             }
 

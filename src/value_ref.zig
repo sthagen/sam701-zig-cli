@@ -105,7 +105,7 @@ const ValueList = struct {
         const gen = struct {
             fn createList(alloc: Allocator) Allocator.Error!*anyopaque {
                 const list = try alloc.create(List);
-                list.* = List{};
+                list.* = .empty;
                 return list;
             }
             fn addOne(list_ptr: *anyopaque, alloc: Allocator) Allocator.Error!*anyopaque {

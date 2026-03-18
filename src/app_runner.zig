@@ -76,7 +76,13 @@ pub const AppRunner = struct {
             processError(&printer, err, cr.error_data orelse unreachable, app);
             if (app.help_config.print_help_on_error) {
                 printer.printNewLine();
-                try help.print_command_help(&printer, app, try cr.command_path.toOwnedSlice(self.orig_allocator), cr.global_options);
+                try help.print_command_help(
+                    &printer,
+                    app,
+                    try cr.command_path.toOwnedSlice(self.orig_allocator),
+                    cr.global_options,
+                    self.orig_allocator,
+                );
             }
             std.process.exit(1);
         }
