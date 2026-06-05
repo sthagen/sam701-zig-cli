@@ -83,6 +83,7 @@ pub const AppRunner = struct {
                     self.arena.allocator(),
                 );
             }
+            printer.flush();
             std.process.exit(1);
         }
     }
