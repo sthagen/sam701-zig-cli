@@ -98,16 +98,15 @@ fn stringData(comptime DestinationType: type) ValueData {
 }
 
 fn enumData(comptime ValueType: type, comptime DestinationType: type) ValueData {
-    const edata = @typeInfo(ValueType).@"enum";
     return .{
         .value_size = @sizeOf(DestinationType),
         .value_parser = struct {
             fn parser(dest: *anyopaque, value: []const u8, alloc: Allocator) ValueParseError!void {
                 _ = alloc;
-                inline for (edata.fields) |field| {
-                    if (std.mem.eql(u8, field.name, value)) {
+                inline for (std.meta.tags(ValueType)) |tag| {
+                    if (std.mem.eql(u8, @tagName(tag), value)) {
                         const dt: *DestinationType = @ptrCast(@alignCast(dest));
-                        dt.* = @field(ValueType, field.name);
+                        dt.* = tag;
                         return;
                     }
                 }

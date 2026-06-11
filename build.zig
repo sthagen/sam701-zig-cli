@@ -43,7 +43,7 @@ pub fn build(b: *std.Build) void {
 
     // Examples short
     {
-        const short_mod = b.addModule("simple", .{
+        const short_mod = b.addModule("short", .{
             .root_source_file = b.path("examples/short.zig"),
             .target = target,
             .optimize = optimize,
